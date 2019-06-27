@@ -1,8 +1,11 @@
-package com.redis.example.entity;
+package com.redis.authCache.entity;
 
+import org.springframework.data.redis.core.RedisHash;
+
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 
-
+@RedisHash
 public class Driver {
 
     private long id;

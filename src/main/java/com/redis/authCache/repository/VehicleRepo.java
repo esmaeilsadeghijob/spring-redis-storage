@@ -1,6 +1,7 @@
-package com.redis.example.repository;
+package com.redis.authCache.repository;
 
-import com.redis.example.entity.Vehicle;
+
+import com.redis.authCache.entity.Vehicle;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
