@@ -12,25 +12,25 @@ import org.springframework.data.redis.core.RedisTemplate;
 //@EnableRedisHttpSession
 public class RedisConfig {
 
-//    @Bean
-//    JedisConnectionFactory jedisConnectionFactory() {
-//
-//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-//
-//        redisStandaloneConfiguration.setHostName("localhost");
-//        redisStandaloneConfiguration.setPort(6379);
-//        redisStandaloneConfiguration.setDatabase(0);
-//        redisStandaloneConfiguration.setPassword(RedisPassword.none());
-//
-//        return new JedisConnectionFactory(redisStandaloneConfiguration);
-//    }
-//
-//    @Bean
-//    public RedisTemplate<String, Object> redisTemplate() {
-//        RedisTemplate<String, Object> template = new RedisTemplate<>();
-//        template.setConnectionFactory(jedisConnectionFactory());
-//        return template;
-//    }
+    @Bean
+    JedisConnectionFactory jedisConnectionFactory() {
+
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+
+        redisStandaloneConfiguration.setHostName("localhost");
+        redisStandaloneConfiguration.setPort(6379);
+        redisStandaloneConfiguration.setDatabase(0);
+        redisStandaloneConfiguration.setPassword(RedisPassword.none());
+
+        return new JedisConnectionFactory(redisStandaloneConfiguration);
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(jedisConnectionFactory());
+        return template;
+    }
 
 
 

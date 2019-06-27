@@ -123,3 +123,6 @@ spring.redis.password= # Login password of the redis server.
 spring.redis.port=6379 # Redis server port.
 ```
 
+**Caching with Redis**
+
+
