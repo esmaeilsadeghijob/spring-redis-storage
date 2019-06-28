@@ -1,5 +1,6 @@
 package com.redis.authCache.config;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisPassword;
@@ -9,6 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 
 @Configuration
+@EnableCaching
 //@EnableRedisHttpSession
 public class RedisConfig {
 

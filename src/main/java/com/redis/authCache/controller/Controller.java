@@ -3,6 +3,7 @@ package com.redis.authCache.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redis.authCache.entity.Driver;
 import com.redis.authCache.entity.Vehicle;
+import com.redis.authCache.examples.CacheableResourceExample;
 import com.redis.authCache.repository.DriverRepo;
 import com.redis.authCache.repository.VehicleRepo;
 
@@ -51,6 +52,9 @@ public class Controller {
         //driverRepo.save(driver);
 
 
+        CacheableResourceExample cacheableResourceExample = new CacheableResourceExample();
+
+        cacheableResourceExample.testCachable();
 
 
 //        ObjectMapper objectMapper = new ObjectMapper();

@@ -125,4 +125,6 @@ spring.redis.port=6379 # Redis server port.
 
 **Caching with Redis**
 
+**Redis repositories**
+
 

@@ -1,13 +1,15 @@
 package com.redis.authCache.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 
-@RedisHash
+@RedisHash("driver")
 public class Driver {
 
+    @Id
     private long id;
     private String name;
     private String surname;

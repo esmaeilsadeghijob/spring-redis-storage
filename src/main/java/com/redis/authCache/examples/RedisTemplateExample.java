@@ -3,7 +3,7 @@ package com.redis.authCache.examples;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
-public class redisTemplateExample {
+public class RedisTemplateExample {
 
     @Autowired
     RedisTemplate redisTemplate;

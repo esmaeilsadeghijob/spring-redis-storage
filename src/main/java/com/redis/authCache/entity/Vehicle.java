@@ -1,15 +1,16 @@
 package com.redis.authCache.entity;
 
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@RedisHash
+@RedisHash("vehicle")
 public class Vehicle {
 
+    @Id
     private long id;
 
     private String numberPlate;
