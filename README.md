@@ -1,5 +1,5 @@
 # redis-auth-cache
-Spring Redis Authentication Store And Caching
+Spring Redis as Session Store, Repository And Caching
 
 * Running redis on Docker
 
