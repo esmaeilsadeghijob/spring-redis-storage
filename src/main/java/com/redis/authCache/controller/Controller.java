@@ -55,15 +55,17 @@ public class Controller {
 
         driverRepo.save(driver);
 
-
-
-        //cacheableResourceExample.testCachable();
-
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        redisTemplate.opsForHash().putAll("driver", objectMapper.convertValue(driver,Map.class));
-
         return driver;
+
+    }
+
+    @GetMapping("/getFromCache")
+    public void getFromCache(){
+
+
+        cacheableResourceExample.getSomeData();
+        cacheableResourceExample.getSomeData();
+        cacheableResourceExample.getSomeData();
 
     }
 }

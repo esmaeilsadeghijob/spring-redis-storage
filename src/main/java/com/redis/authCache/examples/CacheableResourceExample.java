@@ -20,14 +20,5 @@ public class CacheableResourceExample {
 
     }
 
-    public void testCachable(){
-
-        System.out.println(getSomeData()); // first time from end-resource (db)
-
-        System.out.println(getSomeData()); // from cache anymore
-
-        System.out.println(getSomeData()); // from cache
-
-    }
 
 }

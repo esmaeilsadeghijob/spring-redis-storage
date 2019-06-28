@@ -122,7 +122,7 @@ spring.redis.host=localhost # Redis server host.
 spring.redis.password= # Login password of the redis server.
 spring.redis.port=6379 # Redis server port.
 ```
-**Redis repositories**
+**Redis repositories and using Redis as primary storage**
 
 Redis Repositories let us easily convert java objects to RedisHash and store in Redis server.
 
@@ -138,8 +138,15 @@ public class Driver {
 }
 ```
 `@RedisHash` marks entities to be stored in redis hashes. `@Id` annotation (`org.springframework.data.annotation.Id`) is 
-used together with @redisHash to generate **key**.
+used together with @RedisHash to generate **key**.
 
+Note that our repo is basic crud repo
+```java
+@Repository
+public interface DriverRepo extends CrudRepository<Driver,Long> {
+}
+
+```
 Now if we insert some driver it will be stored in redis
 
 ```java
@@ -209,13 +216,114 @@ we see that driver is inserted with (.)
 16) "turkoglu"
 ```
 
+By this way we can use Redis as primary storage, store our data and retrieve with same CrudRepository functions as save,findById etc.
 
+For instance, running `vehicleRepo.findAll()` command retrieves the following json
+
+```json
+[
+   {
+      "id":1,
+      "numberPlate":"34 XA 102",
+      "make":"opel",
+      "model":"astra",
+      "driver":{
+         "id":2,
+         "name":"cemal",
+         "surname":"turkoglu"
+      }
+   }
+]
+
+```
 
 
 **Caching with Redis**
 
+Initialization:
 
+* We need to add `@EnableCaching` annotation.
 
+* spring-boot-starter-data-redis
 
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
 
+* Redis connection configuration. As mentioned above with redisConnectionFactory and redisTemplate beans can be created and it is all needed. 
+Also another way to create is via application.properties, redisAutoConfiguration will handle creating beans.
+
+* Setting redis as cache store. We can set this in our config as follows:
+
+```java
+@Configuration
+@EnableCaching
+public class RedisCacheConfig {
+
+    @Autowired
+    JedisConnectionFactory jedisConnectionFactory;
+
+    @Bean
+    public RedisCacheManager cacheManager() {
+        return RedisCacheManager.create(jedisConnectionFactory);
+    }
+}
+```
+
+Second way is with auto configuration via adding the following parameter in application.properties:
+
+`spring.cache.type=redis`
+
+Caching logic:
+
+@Cachable annotation indicates that the result of invoking a method (or all methods * in a class) can be cached.
+
+if we simply add to a method:
+
+```java
+@Cacheable("data")
+public String getSomeData(){
+    logger.info("accessing the data, NOT FROM CACHE");
+    return "someData";
+}
+
+```
+
+and if we call the method multiple times
+
+```java
+cacheableResourceExample.getSomeData();
+cacheableResourceExample.getSomeData();
+cacheableResourceExample.getSomeData();
+        
+```
+
+if we did not have @EnableCaching annotation it would not be cached and result would be
+
+```java
+accessing the data, NOT FROM CACHE
+accessing the data, NOT FROM CACHE
+accessing the data, NOT FROM CACHE
+```
+
+but thanks to caching first time the function will be executed and later on result will be retrieved from cache
+we see the function is executed once:
+
+```java
+accessing the data, NOT FROM CACHE
+```
+
+and if we check redis:
+
+```
+127.0.0.1:6379> keys *
+1) "data::SimpleKey []"
+127.0.0.1:6379> get "data::SimpleKey []"
+"\xac\xed\x00\x05t\x00\bsomeData"
+```
+
+we see our data is stored.
 

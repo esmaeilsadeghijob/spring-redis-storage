@@ -62,6 +62,13 @@ public class Vehicle {
         this.model = model;
     }
 
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 
     @Override
     public String toString() {
@@ -70,6 +77,7 @@ public class Vehicle {
                 ", numberPlate='" + numberPlate + '\'' +
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
+                ", driver=" + driver +
                 '}';
     }
 }

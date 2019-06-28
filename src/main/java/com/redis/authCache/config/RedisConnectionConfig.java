@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 
 //@EnableRedisHttpSession
-public class RedisConfig {
+public class RedisConnectionConfig {
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
