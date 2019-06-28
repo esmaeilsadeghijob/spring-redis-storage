@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 
 @Configuration
-@EnableCaching
+
 //@EnableRedisHttpSession
 public class RedisConfig {
 

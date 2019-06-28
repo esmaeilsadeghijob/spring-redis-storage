@@ -16,16 +16,18 @@ public class Vehicle {
     private String numberPlate;
     private String make;
     private String model;
+    private Driver driver;
 
 
     public Vehicle() {
     }
 
-    public Vehicle(long id, String numberPlate, String make, String model) {
+    public Vehicle(long id, String numberPlate, String make, String model, Driver driver) {
         this.id = id;
         this.numberPlate = numberPlate;
         this.make = make;
         this.model = model;
+        this.driver = driver;
     }
 
     public long getId() {

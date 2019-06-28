@@ -122,9 +122,100 @@ spring.redis.host=localhost # Redis server host.
 spring.redis.password= # Login password of the redis server.
 spring.redis.port=6379 # Redis server port.
 ```
+**Redis repositories**
+
+Redis Repositories let us easily convert java objects to RedisHash and store in Redis server.
+
+```java
+@RedisHash("driver")
+public class Driver {
+
+    @Id
+    private long id;
+    private String name;
+    private String surname;
+    
+}
+```
+`@RedisHash` marks entities to be stored in redis hashes. `@Id` annotation (`org.springframework.data.annotation.Id`) is 
+used together with @redisHash to generate **key**.
+
+Now if we insert some driver it will be stored in redis
+
+```java
+Driver driver = new Driver(2L, "cemal", "turkoglu");
+driverRepo.save(driver);
+```
+
+query in redis server:
+
+```
+
+127.0.0.1:6379> HGETALL driver:2
+1) "_class"
+2) "com.redis.authCache.entity.Driver"
+3) "id"
+4) "2"
+5) "name"
+6) "cemal"
+7) "surname"
+8) "turkoglu"
+
+```
+
+For the complex object which has stored another object, mapping is implemented with dot path.
+For a vehicle object having driver object as property:
+
+```java
+@RedisHash("vehicle")
+public class Vehicle {
+
+    @Id
+    private long id;
+
+    private String numberPlate;
+    private String make;
+    private String model;
+    private Driver driver;
+```
+
+if we insert a vehicle
+
+```java
+Driver driver = new Driver(2L, "cemal", "turkoglu");
+Vehicle vehicle = new Vehicle(1L, "34 XA 102", "opel", "astra",driver);
+vehicleRepo.save(vehicle);
+```
+
+we see that driver is inserted with (.)
+
+```
+127.0.0.1:6379> HGETALL vehicle:1
+ 1) "_class"
+ 2) "com.redis.authCache.entity.Vehicle"
+ 3) "id"
+ 4) "1"
+ 5) "numberPlate"
+ 6) "34 XA 102"
+ 7) "make"
+ 8) "opel"
+ 9) "model"
+10) "astra"
+11) "driver.id"
+12) "2"
+13) "driver.name"
+14) "cemal"
+15) "driver.surname"
+16) "turkoglu"
+```
+
+
+
 
 **Caching with Redis**
 
-**Redis repositories**
+
+
+
 
 

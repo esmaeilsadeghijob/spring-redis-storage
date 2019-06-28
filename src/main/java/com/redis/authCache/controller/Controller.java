@@ -27,10 +27,14 @@ public class Controller {
     @Autowired
     RedisTemplate redisTemplate;
 
+    @Autowired
+    CacheableResourceExample cacheableResourceExample;
+
     @GetMapping("/vehicle")
     public Vehicle ret(){
 
-        Vehicle vehicle = new Vehicle(1L, "numberPlate", "make", "model");
+        Driver driver = new Driver(2L, "cemal", "turkoglu");
+        Vehicle vehicle = new Vehicle(1L, "34 XA 102", "opel", "astra",driver);
 
         vehicleRepo.save(vehicle);
 
@@ -47,14 +51,13 @@ public class Controller {
     @GetMapping("/driver")
     public Driver driver(){
 
-        Driver driver = new Driver(2L, "object", "mapper");
+        Driver driver = new Driver(2L, "cemal", "turkoglu");
 
-        //driverRepo.save(driver);
+        driverRepo.save(driver);
 
 
-        CacheableResourceExample cacheableResourceExample = new CacheableResourceExample();
 
-        cacheableResourceExample.testCachable();
+        //cacheableResourceExample.testCachable();
 
 
 //        ObjectMapper objectMapper = new ObjectMapper();
